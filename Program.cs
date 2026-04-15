@@ -1,27 +1,53 @@
-var builder = WebApplication.CreateBuilder(args);
+using Microsoft.EntityFrameworkCore; 
+using ProductRecordSystem.Data; 
+using Microsoft.AspNetCore.Identity;
 
-// Add services to the container.
+var builder = WebApplication.CreateBuilder(args); 
+// Add DbContext with PostgreSQL connection 
+builder.Services.AddDbContext<AppDbContext>(options => 
+options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")) 
+); 
+// Add Controllers 
+builder.Services.AddControllers(); 
+// Optional: Swagger for testing 
+builder.Services.AddEndpointsApiExplorer(); 
+builder.Services.AddSwaggerGen(); 
 
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
-builder.Services.AddOpenApi();
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<AppDbContext>()
+    .AddDefaultTokenProviders();
 
-var app = builder.Build();
-
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
+builder.Services.Configure<IdentityOptions>(options =>
 {
-    app.MapOpenApi();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+    options.Password.RequireDigit           = true;
+    options.Password.RequireLowercase       = true;
+    options.Password.RequireUppercase       = true;
+    options.Password.RequiredLength         = 6;
+    options.Password.RequireNonAlphanumeric = false;
+});
+
+var app = builder.Build(); 
+
+using (var scope = app.Services.CreateScope())
+{
+    var roleManager = scope.ServiceProvider
+        .GetRequiredService<RoleManager<IdentityRole>>();
+
+    string[] roles = { "Admin", "Customer", "Vendor" };
+    foreach (var role in roles)
+    {
+        if (!await roleManager.RoleExistsAsync(role))
+            await roleManager.CreateAsync(new IdentityRole(role));
+    }
 }
-
+// Use Swagger 
+if (app.Environment.IsDevelopment()) 
+{ 
+app.UseSwagger(); 
+app.UseSwaggerUI(); 
+} 
 app.UseHttpsRedirection();
-
+app.UseAuthentication();  
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

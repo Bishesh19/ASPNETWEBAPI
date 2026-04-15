@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weather Snapshot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: rgba(255, 255, 255, 0.08);
+      --accent: #38bdf8;
+      --text: #e2e8f0;
+      --muted: #94a3b8;
+      --grid-gap: 1.2rem;
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: radial-gradient(circle at 20% 20%, rgba(56, 189, 248, 0.16), transparent 32%),
+                  radial-gradient(circle at 80% 0%, rgba(129, 140, 248, 0.14), transparent 30%),
+                  var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2.5rem 1.25rem 3rem;
+      display: flex;
+      justify-content: center;
+    }
+
+    .page {
+      width: min(1080px, 100%);
+      display: flex;
+      flex-direction: column;
+      gap: 1.8rem;
+    }
+
+    .header {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .title {
+      font-size: clamp(1.8rem, 2vw + 1rem, 2.6rem);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0.55rem 0.9rem;
+      border-radius: 999px;
+      background: linear-gradient(120deg, rgba(56, 189, 248, 0.16), rgba(129, 140, 248, 0.16));
+      color: #e0f2fe;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: var(--grid-gap);
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.1rem;
+      backdrop-filter: blur(6px);
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35);
+      transition: transform 180ms ease, border-color 180ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(56, 189, 248, 0.35);
+    }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.55rem;
+    }
+
+    .day {
+      font-weight: 600;
+      letter-spacing: 0.01em;
+    }
+
+    .emoji {
+      font-size: 1.5rem;
+    }
+
+    .temp {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #e0f2fe;
+      letter-spacing: -0.01em;
+    }
+
+    .meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+      margin-top: 0.6rem;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    .meta span strong {
+      color: var(--text);
+      font-weight: 600;
+    }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: 0.9rem;
+      text-align: center;
+      margin-top: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header class="header">
+      <div>
+        <div class="title">Weather Snapshot</div>
+        <p class="subtitle">Hardcoded sample data rendered with plain HTML and CSS.</p>
+      </div>
+      <div class="badge">Live mock • Updated hourly</div>
+    </header>
+
+    <section class="grid" aria-label="Weather forecast">
+      <article class="card">
+        <div class="card-head">
+          <span class="day">Monday</span>
+          <span class="emoji" aria-hidden="true">☀️</span>
+        </div>
+        <div class="temp">73°F</div>
+        <div class="meta">
+          <span>High: <strong>75°F</strong></span>
+          <span>Low: <strong>60°F</strong></span>
+          <span>Wind: <strong>8 mph</strong></span>
+          <span>Humidity: <strong>35%</strong></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="day">Tuesday</span>
+          <span class="emoji" aria-hidden="true">⛅</span>
+        </div>
+        <div class="temp">68°F</div>
+        <div class="meta">
+          <span>High: <strong>70°F</strong></span>
+          <span>Low: <strong>58°F</strong></span>
+          <span>Wind: <strong>6 mph</strong></span>
+          <span>Humidity: <strong>42%</strong></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="day">Wednesday</span>
+          <span class="emoji" aria-hidden="true">🌧️</span>
+        </div>
+        <div class="temp">61°F</div>
+        <div class="meta">
+          <span>High: <strong>64°F</strong></span>
+          <span>Low: <strong>55°F</strong></span>
+          <span>Wind: <strong>12 mph</strong></span>
+          <span>Humidity: <strong>68%</strong></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="day">Thursday</span>
+          <span class="emoji" aria-hidden="true">🌤️</span>
+        </div>
+        <div class="temp">70°F</div>
+        <div class="meta">
+          <span>High: <strong>72°F</strong></span>
+          <span>Low: <strong>57°F</strong></span>
+          <span>Wind: <strong>9 mph</strong></span>
+          <span>Humidity: <strong>41%</strong></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="day">Friday</span>
+          <span class="emoji" aria-hidden="true">🌦️</span>
+        </div>
+        <div class="temp">66°F</div>
+        <div class="meta">
+          <span>High: <strong>68°F</strong></span>
+          <span>Low: <strong>54°F</strong></span>
+          <span>Wind: <strong>11 mph</strong></span>
+          <span>Humidity: <strong>55%</strong></span>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-head">
+          <span class="day">Saturday</span>
+          <span class="emoji" aria-hidden="true">☁️</span>
+        </div>
+        <div class="temp">64°F</div>
+        <div class="meta">
+          <span>High: <strong>66°F</strong></span>
+          <span>Low: <strong>53°F</strong></span>
+          <span>Wind: <strong>7 mph</strong></span>
+          <span>Humidity: <strong>48%</strong></span>
+        </div>
+      </article>
+    </section>
+
+    <p class="footer-note">This page is static; wire it to your API later by swapping the hardcoded values for live responses.</p>
+  </main>
+</body>
+</html>
